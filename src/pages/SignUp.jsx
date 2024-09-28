@@ -4,7 +4,11 @@ import React from "react";
 const SignUpPage = () => {
   return (
     <div className="h-screen flex justify-center items-center">
-      <SignUp path="/sign-up" signInUrl="sign-in" />
+      <SignUp
+        path="/sign-up"
+        signInUrl="sign-in"
+        forceRedirectUrl="/dashboard"
+      />
     </div>
   );
 };
