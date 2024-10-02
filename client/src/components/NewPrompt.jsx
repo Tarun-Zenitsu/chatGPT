@@ -1,16 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Upload from "./Upload";
+import { IKImage } from "imagekitio-react";
 
 const NewPrompt = () => {
   const endref = useRef(null);
+  const [img, setImg] = useState({
+    isLoading: false,
+    error: "",
+    dbData: {},
+  });
   useEffect(() => {
     endref.current.scrollIntoView({ behavior: "smooth" });
   });
   return (
     <>
-      test
+      {img.isLoading && <div>Loading...</div>}
+      {img.dbData?.filePath && (
+        <IKImage
+          urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
+          path={img.dbData?.filePath}
+          width="380"
+          transformation={[{ width: 380 }]}
+        />
+      )}
       <div className="pb-[15%]" ref={endref} />
       <form className="w-[50%] absolute bottom-0 bg-[#2c2937] rounded-2xl flex gap-5 px-5 items-center justify-between">
-        <label
+        {/* <label
           htmlFor="file"
           className="w-8 h-8 p-2 rounded-full bg-[#605e68] flex items-center justify-center overflow-hidden"
         >
@@ -19,7 +34,8 @@ const NewPrompt = () => {
             alt="attachment"
             className="w-full h-full object-cover cursor-pointer"
           />
-        </label>
+        </label> */}
+        <Upload setImg={setImg} />
         <input id="file" type="file" multiple={false} hidden />
 
         <input
