@@ -28,6 +28,9 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        scrollbar: {
+          hide: "hide-scrollbar",
+        },
       },
     },
   },
