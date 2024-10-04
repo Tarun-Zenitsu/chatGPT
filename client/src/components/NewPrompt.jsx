@@ -8,19 +8,22 @@ const NewPrompt = () => {
   const [question, setQuestion] = useState("");
   const [ans, setAns] = useState("");
 
-  const add = async (text) => {
-    const result = await model.generateContent(text);
-    const response = await result.response.text();
-    console.log(response);
-    setAns(response);
-  };
-
   const endref = useRef(null);
   const [img, setImg] = useState({
     isLoading: false,
     error: "",
     dbData: {},
+    aiData: {},
   });
+
+  const add = async (text) => {
+    const result = await model.generateContent(
+      Object.entries(img.aiData).length ? [img.aiData, text] : [text]
+    );
+    const response = await result.response.text();
+    setAns(response);
+    setImg({ isLoading: false, error: "", dbData: {}, aiData: {} });
+  };
 
   useEffect(() => {
     endref.current.scrollIntoView({ behavior: "smooth" });
