@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { userId, isLoaded } = useAuth();
+  const { userId } = useAuth();
+  const { isLoaded } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +16,20 @@ const Dashboard = () => {
   if (!isLoaded) {
     return "Loading...";
   }
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    const text = e.target.text.value;
+    if (!text) return;
+    await fetch("http://localhost:3000/api/chats", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text, userId }),
+    });
+  };
 
   return (
     <div className="h-full flex flex-col items-center">
@@ -60,9 +75,10 @@ const Dashboard = () => {
 
       <div className="mt-auto rounded-md flex justify-center w-[50%]">
         {/* Input form with arrow inside the input */}
-        <form className="relative w-full mb-5">
+        <form className="relative w-full mb-5" onSubmit={handelSubmit}>
           <input
             type="text"
+            name="text"
             placeholder="Ask me anything..."
             className="rounded-xl w-full outline-none border-none p-3 pl-5 bg-[#2c2937] text-[#ececec]"
           />

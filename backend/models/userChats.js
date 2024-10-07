@@ -1,4 +1,4 @@
-import mongoose, { now } from "mongoose";
+import mongoose from "mongoose";
 
 const userChatsSchema = new mongoose.Schema(
   {
@@ -18,7 +18,7 @@ const userChatsSchema = new mongoose.Schema(
         },
         createdAt: {
           type: Date,
-          default: Date.now(),
+          default: Date.now, // Use reference to Date.now function
         },
       },
     ],
@@ -26,5 +26,5 @@ const userChatsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.userChats ||
-  mongoose.model("userChats", userChatsSchema);
+export default mongoose.models.UserChats ||
+  mongoose.model("UserChats", userChatsSchema);
